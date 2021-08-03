@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as func
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 
-spark = SparkSession.builder.appName('most_popularSuperhero').getOrCreate()
+spark = SparkSession.builder.appName('MostPopularSuperhero').getOrCreate()
 
 schema = StructType([
     StructField('id', IntegerType(), True),
