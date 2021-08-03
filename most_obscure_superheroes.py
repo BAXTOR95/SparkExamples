@@ -1,8 +1,10 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as func
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
+import codecs
 
-spark = SparkSession.builder.appName('MostPopularSuperhero').getOrCreate()
+
+spark = SparkSession.builder.appName('MostObscureSuperheroes').getOrCreate()
 
 schema = StructType([
     StructField('id', IntegerType(), True),
@@ -12,21 +14,25 @@ names = spark.read.schema(schema).option('sep', ' ').csv(
     'file:///Users/brian/code/from_courses/SparkCourse/Marvel-Names')
 
 lines = spark.read.text(
-    'file:///Users/brian/code/from_courses/SparkCourse/Marvel-Graph')
+    'file:///Users/brian/code/from_courses/SparkCourse/Marvel-Graph'
+)
 
-# Small tweak vs. what's shown in the video: we trim each line of whitespace as that could
-# throw off the counts.
 connections = lines.withColumn('id', func.split(func.trim(func.col('value')), ' ')[0]) \
     .withColumn('connections', func.size(func.split(func.trim(func.col('value')), ' ')) - 1) \
     .groupBy('id').agg(func.sum('connections').alias('connections'))
 
-most_popular = connections.sort(func.col('connections').desc()).first()
+min_connection = connections.select('connections').agg(
+    func.min('connections')).first()[0]
 
-most_popular_name = names.filter(
-    func.col('id') == most_popular[0]).select('name').first()
+most_obscures = connections.sort(func.col('connections').asc()).filter(
+    func.col('connections') == min_connection)
 
-print(most_popular_name[0] + ' is the most popular superhero with ' +
-      str(most_popular[1]) + ' co-appearances.')
+# Add a superhero_name column using our new udf
+most_obscures_names = most_obscures.join(names, 'id').select('name')
+
+print('The most obscure superheroes of all time with ' +
+      str(min_connection) + ' connection(s) are:')
+most_obscures_names.show()
 
 # Stop the session
 spark.stop()
