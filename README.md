@@ -1,6 +1,6 @@
-# **`Spark Code Examples in Python`**
+# <span style="color: #4f87e0">**Spark Code Examples in Python**</span>
 
-## **`Installing Apache Spark and Python`**
+## <span style="color: #2c5391">**Installing Apache Spark and Python**</span>
 
 ## **Windows**: (keep scrolling for MacOS and Linux)
 
