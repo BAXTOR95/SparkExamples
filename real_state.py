@@ -11,9 +11,9 @@ if __name__ == '__main__':
     spark = SparkSession.builder.appName('DecisionTree').getOrCreate()
 
     # Read the file as dataframe
-    data = spark.read.option('header', 'true').option('inferSchema', 'true').csv(
-        'file:///Users/brian/code/from_courses/SparkCourse/realestate.csv'
-    )
+    data = spark.read.option('header', 'true').option('inferSchema', 'true')\
+        .csv(
+            'file:///Users/brian/code/from_courses/SparkCourse/realestate.csv')
 
     # Creating the vector assembler to create a new column containing
     # all the features in an array-like object
