@@ -9,7 +9,7 @@ def load_movie_names():
     movie_names = {}
     # CHANGE THIS TO THE PATH TO YOUR u.ITEM FILE:
     with codecs.open(
-        'C:/Users/brian/code/from_courses/SparkCourse/ml-100k/u.item',
+        'C:/Users/brian/code/SparkExamples/ml-100k/u.item',
         'r',
         encoding='ISO-8859-1',
         errors='ignore'
@@ -31,7 +31,7 @@ movies_schema = StructType([
 names = load_movie_names()
 
 ratings = spark.read.option('sep', '\t').schema(movies_schema) \
-    .csv('file:///Users/brian/code/from_courses/SparkCourse/ml-100k/u.data')
+    .csv('file:///Users/brian/code/SparkExamples/ml-100k/u.data')
 
 print('Training recommendation model...')
 

@@ -3,7 +3,7 @@ from pyspark import SparkConf, SparkContext
 conf = SparkConf().setMaster('local').setAppName('WordCount')
 sc = SparkContext(conf = conf)
 
-input = sc.textFile('file:///Users/brian/code/from_courses/SparkCourse/Book')
+input = sc.textFile('file:///Users/brian/code/SparkExamples/Book')
 words = input.flatMap(lambda x: x.split())
 word_counts = words.countByValue()
 

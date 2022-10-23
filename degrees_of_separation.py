@@ -32,7 +32,7 @@ def convert_to_bfs(line):
 
 def create_starting_rdd():
     input_file = sc.textFile(
-        'file:///Users/brian/code/from_courses/SparkCourse/Marvel-Graph')
+        'file:///Users/brian/code/SparkExamples/Marvel-Graph')
     return input_file.map(convert_to_bfs)
 
 

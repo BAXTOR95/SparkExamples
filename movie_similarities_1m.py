@@ -10,10 +10,10 @@ from math import sqrt
 
 def load_movie_names():
     movie_names = {}
-    with open('movies.dat') as f:
+    with open('./ml-1m/movies.dat') as f:
         for line in f:
             fields = line.split('::')
-            movie_names[int(fields[0])] = fields[1].decode('ascii', 'ignore')
+            movie_names[int(fields[0])] = fields[1].encode().decode('ascii', 'ignore')
     return movie_names
 
 
@@ -54,7 +54,7 @@ sc = SparkContext(conf=conf)
 print('\nLoading movie names...')
 name_dict = load_movie_names()
 
-data = sc.textFile('s3n://sundog-spark/ml-1m/ratings.dat')
+data = sc.textFile('./ml-1m/ratings.dat')
 
 # Map ratings to key / value pairs: user ID => movie ID, rating
 ratings = data.map(lambda l: l.split('::')).map(
